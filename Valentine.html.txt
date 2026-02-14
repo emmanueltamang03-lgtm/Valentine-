@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -50px;
+    font-size: 24px;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-120vh);
+        opacity: 0;
+    }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    margin-top: 30vh;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+button {
+    font-size: 20px;
+    padding: 12px 25px;
+    margin: 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#yesBtn {
+    background: hotpink;
+    color: white;
+}
+
+#noBtn {
+    background: gray;
+    color: white;
+    position: absolute;
+}
+
+/* Celebration screen */
+#celebrate {
+    display: none;
+    margin-top: 15vh;
+}
+
+.confetti {
+    position: absolute;
+    font-size: 22px;
+    animation: confettiFall 3s linear infinite;
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+.gif {
+    width: 200px;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+    <h1>ALISHA,<br>WILL YOU BE MY VALENTINE?</h1>
+
+    <button id="yesBtn">YES</button>
+    <button id="noBtn">NO</button>
+</div>
+
+<div id="celebrate">
+    <h1>I KNEW YOU LOVE ME</h1>
+
+    <!-- Replace with any dancing gif link -->
+    <img class="gif" src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif">
+
+</div>
+
+<script>
+
+/* Floating hearts generator */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (4 + Math.random()*3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 300);
+
+/* NO button escape logic */
+const noBtn = document.getElementById("noBtn");
+
+function moveNo() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 100);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* YES button celebration */
+document.getElementById("yesBtn").onclick = () => {
+    document.getElementById("main").style.display = "none";
+    document.getElementById("celebrate").style.display = "block";
+    startConfetti();
+};
+
+/* Confetti / graffiti effect */
+function startConfetti() {
+    setInterval(() => {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.innerHTML = ["🎉","✨","💖","💥"][Math.floor(Math.random()*4)];
+        conf.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(conf);
+
+        setTimeout(() => conf.remove(), 3000);
+    }, 120);
+}
+
+</script>
+
+</body>
+</html>
